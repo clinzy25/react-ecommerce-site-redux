@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -19,7 +19,7 @@ const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
   const { myUser } = useUserContext();
   const history = useHistory();
-
+  // STRIPE STUFF
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -46,27 +46,28 @@ const CheckoutForm = () => {
     },
   };
 
-  const createPaymentIntent = useCallback(async () => {
+  const createPaymentIntent = async () => {
     try {
       const { data } = await axios.post(
         '/.netlify/functions/create-payment-intent',
         JSON.stringify({ cart, shipping_fee, total_amount })
       );
+
       setClientSecret(data.clientSecret);
-    } catch (err) {
-      console.log(err.response);
+    } catch (error) {
+      console.log(error.response);
     }
-  }, [cart, shipping_fee, total_amount]);
+  };
 
   useEffect(() => {
     createPaymentIntent();
-  }, [createPaymentIntent]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = async (event) => {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : '');
   };
-
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
@@ -76,7 +77,7 @@ const CheckoutForm = () => {
       },
     });
     if (payload.error) {
-      setError(`Payment failed :${payload.error.message}`);
+      setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
     } else {
       setError(null);
@@ -95,11 +96,11 @@ const CheckoutForm = () => {
         <article>
           <h4>Thank you</h4>
           <h4>Your payment was successful!</h4>
-          <h4>Redirecting to home</h4>
+          <h4>Redirecting to home page shortly</h4>
         </article>
       ) : (
         <article>
-          <h4>Hello, {myUser && myUser.name} </h4>
+          <h4>Hello, {myUser && myUser.name}</h4>
           <p>Your total is {formatPrice(shipping_fee + total_amount)}</p>
           <p>Test Card Number : 4242 4242 4242 4242</p>
         </article>
@@ -116,7 +117,7 @@ const CheckoutForm = () => {
           id='submit'
         >
           <span id='button-text'>
-            {processing ? <div className='spinner' id='spinner' /> : 'Pay now'}
+            {processing ? <div className='spinner' id='spinnier' /> : 'Pay'}
           </span>
         </button>
         {/* Show any error that happens when processing the payment */}
@@ -125,14 +126,13 @@ const CheckoutForm = () => {
             {error}
           </div>
         )}
-        {/* Show a success message upon completion */}
+        {/* Show  a success message upon completion */}
         <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-          Payment succeeded, see the result in your
+          Payment succedded, see the result in your
           <a href='https://dashboard.stripe.com/test/payments'>
-            {' '}
-            Stripe dashboard.
-          </a>{' '}
-          Refresh the page to pay again.
+            Stripe dasboard.
+          </a>
+          Refresh the page to pay again
         </p>
       </form>
     </div>
