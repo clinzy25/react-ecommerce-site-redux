@@ -1,26 +1,10 @@
-<<<<<<< HEAD
-## Notes
+#### View at: https://comfy-sloth-cl.netlify.app/
 
-#### Older React Version
+A full React ecommerce site.
 
-```
-"react": "^16.13.1",
-"react-dom": "^16.13.1",
-"react-scripts": "3.4.3",
-```
+- Auth0
+- Stripe payments
+- React router
+- Netlify serverless functions
+- useReducer for state management
 
-#### Current React Version
-
-```
-"react": "^17.0.1",
-"react-dom": "^17.0.1",
-"react-scripts": "4.0.0",
-```
-
-#### Alternative fix
-
-.env file in the root
-FAST_REFRESH=FALSE
-=======
-# react-ecommerce-site
->>>>>>> 2c19e08717aac7d231e0b9bf61c8de4beb61ea20
