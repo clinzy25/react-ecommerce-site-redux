@@ -6,5 +6,4 @@ A full React ecommerce site.
 - Stripe payments
 - React router
 - Netlify serverless functions
-- useReducer for state management
-
+- ContextAPI / useReducer for state management
