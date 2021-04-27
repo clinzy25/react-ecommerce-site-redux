@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
-import { useFilterContext } from '../context/filter_context';
+// import { useFilterContext } from '../context/filter_context';
 import { getUniqueValues, formatPrice } from '../utils/helpers';
+import { updateFilters, clearFilters, FILTER_PRODUCTS } from '../actions';
 
 const Filters = () => {
+  // const {
+  //   filters: {
+  //     text,
+  //     category,
+  //     company,
+  //     color,
+  //     min_price,
+  //     max_price,
+  //     price,
+  //     shipping,
+  //   },
+  //   updateFilters,
+  //   clearFilters,
+  //   all_products,
+  // } = useFilterContext();
+
+  const dispatch = useDispatch();
+
   const {
+    products,
+    all_products,
     filters: {
       text,
       category,
@@ -16,10 +38,11 @@ const Filters = () => {
       price,
       shipping,
     },
-    updateFilters,
-    clearFilters,
-    all_products,
-  } = useFilterContext();
+  } = useSelector((state) => state);
+
+  // useEffect(() => {
+  //   dispatch({ type: FILTER_PRODUCTS });
+  // }, [products, state.filters]);
 
   const categories = getUniqueValues(all_products, 'category');
   const companies = getUniqueValues(all_products, 'company');
@@ -36,7 +59,7 @@ const Filters = () => {
               name='text'
               placeholder='search'
               value={text}
-              onChange={updateFilters}
+              onChange={() => dispatch(updateFilters())}
               className='search-input'
             />
           </div>
@@ -49,7 +72,7 @@ const Filters = () => {
                   key={cat}
                   name='category'
                   type='button'
-                  onClick={updateFilters}
+                  onClick={() => dispatch(updateFilters())}
                   className={`${
                     category === cat.toLowerCase() ? 'active' : null
                   }`}
@@ -65,7 +88,7 @@ const Filters = () => {
             <select
               name='company'
               value={company}
-              onChange={updateFilters}
+              onChange={() => dispatch(updateFilters())}
               className='company'
             >
               {companies.map((comp) => (
@@ -89,7 +112,7 @@ const Filters = () => {
                         className={`${
                           color === 'all' ? 'all-btn active' : 'all-btn'
                         }`}
-                        onClick={updateFilters}
+                        onClick={() => dispatch(updateFilters())}
                       >
                         All
                       </button>
@@ -105,7 +128,7 @@ const Filters = () => {
                         col === color ? 'active color-btn' : 'color-btn'
                       }`}
                       data-color={col}
-                      onClick={updateFilters}
+                      onClick={() => dispatch(updateFilters())}
                     >
                       {col === color ? <FaCheck /> : null}
                     </button>
@@ -124,7 +147,7 @@ const Filters = () => {
               min={min_price}
               max={max_price}
               value={price}
-              onChange={updateFilters}
+              onChange={() => dispatch(updateFilters())}
             />
           </div>
           {/* Shipping */}
@@ -135,13 +158,17 @@ const Filters = () => {
                 type='checkbox'
                 name='shipping'
                 id='shipping'
-                onChange={updateFilters}
+                onChange={() => dispatch(updateFilters())}
                 checked={shipping}
               />
             </label>
           </div>
         </form>
-        <button type='button' className='clear-btn' onClick={clearFilters}>
+        <button
+          type='button'
+          className='clear-btn'
+          onClick={() => dispatch(clearFilters())}
+        >
           {' '}
           Clear Filters
         </button>

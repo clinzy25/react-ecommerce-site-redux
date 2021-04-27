@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useProductsContext } from '../context/products_context';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
+import { useAuth0 } from '@auth0/auth0-react';
+// import { useProductsContext } from '../context/products_context';
+// import { useCartContext } from '../context/cart_context';
+// import { useUserContext } from '../context/user_context';
+import { clearCart, closeSidebar } from '../actions';
 
 const CartButtons = () => {
-  const { closeSidebar } = useProductsContext();
-  const { total_items, clearCart } = useCartContext();
-  const { loginWithRedirect, logout, myUser } = useUserContext();
+  // const { closeSidebar } = useProductsContext();
+  // const { total_items, clearCart } = useCartContext();
+  const [myUser, setMyUser] = useState(null);
+  const { loginWithRedirect, logout, user } = useAuth0();
+
+  const total_items = useSelector((state) => state.total_items);
+
+  const dispatch = useDispatch();
 
   return (
     <Wrapper className='cart-btn-wrapper'>
-      <Link to='/cart' className='cart-btn' onClick={closeSidebar}>
+      <Link
+        to='/cart'
+        className='cart-btn'
+        onClick={() => dispatch(closeSidebar())}
+      >
         Cart
         <span className='cart-container'>
           <FaShoppingCart />
@@ -25,7 +37,7 @@ const CartButtons = () => {
           type='button'
           className='auth-btn'
           onClick={() => {
-            clearCart();
+            dispatch(clearCart());
             logout({ returnTo: window.location.origin });
           }}
         >

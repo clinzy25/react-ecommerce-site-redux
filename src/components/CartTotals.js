@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
+// import { useCartContext } from '../context/cart_context';
+// import { useUserContext } from '../context/user_context';
 import { formatPrice } from '../utils/helpers';
 
 const CartTotals = () => {
-  const { total_amount, shipping_fee } = useCartContext();
-  const { myUser, loginWithRedirect } = useUserContext();
+  const { total_amount, shipping_fee } = useSelector((state) => state);
+  // const { myUser, loginWithRedirect } = useUserContext();
+  const [myUser, setMyUser] = useState(null);
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <Wrapper>

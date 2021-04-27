@@ -1,7 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useProductsContext } from '../context/products_context';
+// import { useProductsContext } from '../context/products_context';
 import Error from './Error';
 import Loading from './Loading';
 import Product from './Product';
@@ -11,7 +12,7 @@ const FeaturedProducts = () => {
     products_loading: loading,
     products_error: error,
     featured_products: featured,
-  } = useProductsContext();
+  } = useSelector((state) => state);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -27,7 +28,7 @@ const FeaturedProducts = () => {
           <Product key={product.id} {...product} />
         ))}
       </div>
-      <Link to='/products' className='btn' >
+      <Link to='/products' className='btn'>
         All products
       </Link>
     </Wrapper>

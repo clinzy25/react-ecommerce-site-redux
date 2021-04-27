@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { useProductsContext } from '../context/products_context';
-import { single_product_url as url } from '../utils/constants';
 import { formatPrice } from '../utils/helpers';
 import {
   Loading,
@@ -16,16 +15,19 @@ import {
 const SingleProductPage = () => {
   const { id } = useParams();
   const history = useHistory();
+
+  // ********************************
+  // const { fetchSingleProduct } = useProductsContext();
+  // useEffect(() => {
+  //   fetchSingleProduct(`${url}${id}`);
+  // }, [id, fetchSingleProduct]);
+  // ********************************
+
   const {
-    fetchSingleProduct,
     single_product_loading: loading,
     single_product_error: error,
     single_product: product,
-  } = useProductsContext();
-
-  useEffect(() => {
-    fetchSingleProduct(`${url}${id}`);
-  }, [id, fetchSingleProduct]);
+  } = useSelector((state) => state);
 
   useEffect(() => {
     if (error) {

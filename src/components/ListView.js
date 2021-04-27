@@ -1,28 +1,34 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../utils/helpers';
 
-const ListView = ({ products }) => (
-  <Wrapper>
-    {products.map((product) => {
-      const { id, image, name, price, description } = product;
-      return (
-        <article key={id}>
-          <img src={image} alt={name} />
-          <div>
-            <h4>{name}</h4>
-            <h5 className='price'>{formatPrice(price)}</h5>
-            <p>{description.substr(0, 150)}...</p>
-            <Link to={`/products/${id}`} className='btn'>
-              Details
-            </Link>
-          </div>
-        </article>
-      );
-    })}
-  </Wrapper>
-);
+const ListView = () => {
+  const products = useSelector((state) => state.products);
+
+  return (
+    <Wrapper>
+      {products.map((product) => {
+        const { id, image, name, price, description } = product;
+        return (
+          <article key={id}>
+            <img src={image} alt={name} />
+            <div>
+              <h4>{name}</h4>
+              <h5 className='price'>{formatPrice(price)}</h5>
+              <p>{description.substr(0, 150)}...</p>
+              <Link to={`/products/${id}`} className='btn'>
+                Details
+              </Link>
+            </div>
+          </article>
+        );
+      })}
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   display: grid;

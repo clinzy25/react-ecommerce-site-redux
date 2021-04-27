@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import logo from '../assets/logo.svg';
 import { links } from '../utils/constants';
 import CartButtons from './CartButtons';
-import { useProductsContext } from '../context/products_context';
-import { useUserContext } from '../context/user_context';
+// import { useProductsContext } from '../context/products_context';
+// import { useUserContext } from '../context/user_context';
+import { openSidebar } from '../actions';
 
 const Nav = () => {
-  const { openSidebar } = useProductsContext();
-  const { myUser } = useUserContext();
+  // const { openSidebar } = useProductsContext();
+  const [myUser, setMyUser] = useState(null);
+  const dispatch = useDispatch();
 
   return (
     <NavContainer>
@@ -19,7 +23,11 @@ const Nav = () => {
           <Link to='/'>
             <img src={logo} alt='Return to home' />
           </Link>
-          <button type='button' className='nav-toggle' onClick={openSidebar}>
+          <button
+            type='button'
+            className='nav-toggle'
+            onClick={() => dispatch(openSidebar())}
+          >
             <FaBars />
           </button>
         </div>

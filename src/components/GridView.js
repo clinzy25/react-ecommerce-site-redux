@@ -1,16 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Product from './Product';
 
-const GridView = ({ products }) => (
-  <Wrapper>
-    <div className='products-container'>
-      {products.map((product) => (
-        <Product key={product.id} {...product} />
-      ))}
-    </div>
-  </Wrapper>
-);
+const GridView = () => {
+  const products = useSelector((state) => state.products);
+
+  return (
+    <Wrapper>
+      <div className='products-container'>
+        {products.map((product) => (
+          <Product key={product.id} {...product} />
+        ))}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   img {
