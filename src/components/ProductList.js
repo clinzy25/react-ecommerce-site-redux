@@ -11,6 +11,9 @@ const ProductList = () => {
   );
   const dispatch = useDispatch();
 
+  
+  // Should it be in a use effect? 
+  
   // useEffect(() => {
   //   dispatch(getProductsBegin());
   // }, []);

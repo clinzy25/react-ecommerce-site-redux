@@ -57,14 +57,3 @@ export default function* productsSaga() {
 //   }
 //   return [];
 // }
-
-// const fetchProducts = async (url) => {
-//   dispatch({ type: GET_PRODUCTS_BEGIN });
-//   try {
-//     const response = await axios.get(url);
-//     const products = response.data;
-//     dispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
-//   } catch (error) {
-//     dispatch({ type: GET_PRODUCTS_ERROR });
-//   }
-// };
