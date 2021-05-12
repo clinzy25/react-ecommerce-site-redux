@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { PageHero, StripeCheckout } from '../components';
 
 const CheckoutPage = () => {
-  const cart = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart_reducer);
 
   return (
     <main>

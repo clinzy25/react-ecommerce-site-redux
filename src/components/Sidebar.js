@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import logo from '../assets/logo.svg';
-// import { useProductsContext } from '../context/products_context';
 import { links } from '../utils/constants';
 import CartButtons from './CartButtons';
-// import { useUserContext } from '../context/user_context';
 import { closeSidebar } from '../actions';
 
 const Sidebar = () => {
-  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
-  const [myUser, setMyUser] = useState(null);
+  const isSidebarOpen = useSelector(
+    (state) => state.products_reducer.isSidebarOpen
+  );
+  const { user } = useAuth0();
   const dispatch = useDispatch();
 
   return (
@@ -34,7 +35,7 @@ const Sidebar = () => {
               </Link>
             </li>
           ))}
-          {myUser && (
+          {user && (
             <li>
               <Link to='/checkout' onClick={() => dispatch(closeSidebar())}>
                 Checkout

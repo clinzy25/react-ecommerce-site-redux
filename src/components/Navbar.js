@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
@@ -10,7 +10,7 @@ import CartButtons from './CartButtons';
 import { openSidebar } from '../actions';
 
 const Nav = () => {
-  const [myUser, setMyUser] = useState(null);
+  const { user } = useAuth0();
   const dispatch = useDispatch();
 
   return (
@@ -36,7 +36,7 @@ const Nav = () => {
               </Link>
             </li>
           ))}
-          {myUser && (
+          {user && (
             <li>
               <Link to='/checkout'>Checkout</Link>
             </li>

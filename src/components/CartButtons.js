@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -7,11 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { clearCart, closeSidebar } from '../actions';
 
 const CartButtons = () => {
-  const [myUser, setMyUser] = useState(null);
   const { loginWithRedirect, logout, user } = useAuth0();
-
   const total_items = useSelector((state) => state.cart_reducer.total_items);
-
   const dispatch = useDispatch();
 
   return (
@@ -27,7 +24,7 @@ const CartButtons = () => {
           <span className='cart-value'>{total_items}</span>
         </span>
       </Link>
-      {myUser ? (
+      {user ? (
         <button
           type='button'
           className='auth-btn'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -7,8 +7,7 @@ import { formatPrice } from '../utils/helpers';
 
 const CartTotals = () => {
   const { total_amount, shipping_fee } = useSelector((state) => state.cart_reducer);
-  const [myUser, setMyUser] = useState(null);
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, user } = useAuth0();
 
   return (
     <Wrapper>
@@ -26,7 +25,7 @@ const CartTotals = () => {
             <span>{formatPrice(total_amount + shipping_fee)}</span>
           </h4>
         </article>
-        {myUser ? (
+        {user ? (
           <Link to='/checkout' className='btn'>
             proceed to checkout
           </Link>
