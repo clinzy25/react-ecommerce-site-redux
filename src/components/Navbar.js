@@ -7,12 +7,9 @@ import { FaBars } from 'react-icons/fa';
 import logo from '../assets/logo.svg';
 import { links } from '../utils/constants';
 import CartButtons from './CartButtons';
-// import { useProductsContext } from '../context/products_context';
-// import { useUserContext } from '../context/user_context';
 import { openSidebar } from '../actions';
 
 const Nav = () => {
-  // const { openSidebar } = useProductsContext();
   const [myUser, setMyUser] = useState(null);
   const dispatch = useDispatch();
 

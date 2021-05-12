@@ -4,11 +4,9 @@ import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
-// import { useCartContext } from '../context/cart_context';
 import { removeItem, toggleAmount } from '../actions';
 
 const CartItem = ({ id, image, name, color, price, amount, max }) => {
-  // const { removeItem, toggleAmount } = useCartContext();
   const dispatch = useDispatch();
 
   const increase = () => {

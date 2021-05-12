@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { formatPrice } from '../utils/helpers';
 
 const ListView = () => {
-  const products = useSelector((state) => state.products);
+  const products = useSelector((state) => state.products_reducer.products);
 
   return (
     <Wrapper>

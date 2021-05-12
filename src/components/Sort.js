@@ -3,22 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
 // import { useFilterContext } from '../context/filter_context';
-import {
-  setGridView,
-  setListView,
-  updateSort,
-  SORT_PRODUCTS,
-} from '../actions';
+import { setGridView, setListView, updateSort, sortProducts } from '../actions';
 
 const Sort = () => {
-  const { sort, filtered_products: products, grid_view } = useSelector(
-    (state) => state
+  const { filtered_products: products, grid_view, sort } = useSelector(
+    (state) => state.filter_reducer
   );
+  
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch({ type: SORT_PRODUCTS });
-  // }, [products, sort]);
+  useEffect(() => {
+    dispatch(sortProducts());
+  }, [sort, dispatch]);
 
   return (
     <Wrapper>
@@ -45,7 +41,7 @@ const Sort = () => {
           Sort by
           <select
             value={sort}
-            onChange={() => dispatch(updateSort())}
+            onChange={(e) => dispatch(updateSort(e))}
             name='sort'
             id='sort'
             className='sort-input'

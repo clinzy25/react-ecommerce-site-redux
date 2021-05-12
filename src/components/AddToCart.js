@@ -12,8 +12,6 @@ const AddToCart = ({ product }) => {
   const [amount, setAmount] = useState(1);
   const dispatch = useDispatch();
 
-  // const { addToCart } = useCartContext();
-
   const increase = () => {
     setAmount((oldAmount) => {
       const tempAmount = oldAmount + 1;

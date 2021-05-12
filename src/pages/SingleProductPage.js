@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { formatPrice } from '../utils/helpers';
+import { single_product_url as url } from '../utils/constants';
 import {
   Loading,
   Error,
@@ -11,23 +12,22 @@ import {
   Stars,
   PageHero,
 } from '../components';
+import { getSingleProductBegin } from '../actions';
 
 const SingleProductPage = () => {
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  // ********************************
-  // const { fetchSingleProduct } = useProductsContext();
-  // useEffect(() => {
-  //   fetchSingleProduct(`${url}${id}`);
-  // }, [id, fetchSingleProduct]);
-  // ********************************
+  useEffect(() => {
+    dispatch(getSingleProductBegin(`${url}${id}`));
+  }, [id, dispatch]);
 
   const {
     single_product_loading: loading,
     single_product_error: error,
     single_product: product,
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.products_reducer);
 
   useEffect(() => {
     if (error) {

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import { useProductsContext } from '../context/products_context';
 import Error from './Error';
 import Loading from './Loading';
 import Product from './Product';
@@ -14,14 +13,12 @@ const FeaturedProducts = () => {
     products_error: error,
     featured_products: featured,
   } = useSelector((state) => state.products_reducer);
+  
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state)
-  console.log(state)
-  
   useEffect(() => {
     dispatch(getProductsBegin());
-  }, []);
+  }, [dispatch]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;

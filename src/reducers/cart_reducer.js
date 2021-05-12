@@ -6,9 +6,16 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
 } from '../actions';
 
+const getLocalStorage = () => {
+  const cart = localStorage.getItem('cart');
+  if (cart) {
+    return JSON.parse(localStorage.getItem('cart'));
+  }
+  return [];
+};
+
 const initialState = {
-  cart: [],
-  // cart: getLocalStorage(),
+  cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,

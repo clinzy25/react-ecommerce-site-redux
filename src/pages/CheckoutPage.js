@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PageHero, StripeCheckout } from '../components';
-// import { useCartContext } from '../context/cart_context';
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);

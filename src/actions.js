@@ -20,37 +20,24 @@ export const TOGGLE_CART_ITEM_AMOUNT = 'TOGGLE_CART_ITEM_AMOUNT';
 export const CLEAR_CART = 'CLEAR_CART';
 export const COUNT_CART_TOTALS = 'COUNT_CART_TOTALS';
 
-export const addToCart = (id, color, amount, product) => {
-  return { type: ADD_TO_CART, payload: { id, color, amount, product } };
-};
+export const addToCart = (id, color, amount, product) => ({ type: ADD_TO_CART, payload: { id, color, amount, product } });
 
-export const clearCart = () => {
-  return { type: CLEAR_CART };
-};
+export const clearCart = () => ({ type: CLEAR_CART });
 
-export const closeSidebar = () => {
-  return { type: SIDEBAR_CLOSE };
-};
+export const closeSidebar = () => ({ type: SIDEBAR_CLOSE });
 
-export const removeItem = (id) => {
-  return { type: REMOVE_CART_ITEM, payload: id };
-};
+export const removeItem = (id) => ({ type: REMOVE_CART_ITEM, payload: id });
 
-export const toggleAmount = (id, value) => {
-  return { type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } };
-};
+export const toggleAmount = (id, value) => ({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
 
-export const openSidebar = () => {
-  return { type: SIDEBAR_OPEN };
-};
+export const openSidebar = () => ({ type: SIDEBAR_OPEN });
 
-export const setGridView = () => {
-  return { type: SET_GRIDVIEW };
-};
+export const setGridView = () => ({ type: SET_GRIDVIEW });
 
-export const setListView = () => {
-  return { type: SET_LISTVIEW };
-};
+export const setListView = () => ({ type: SET_LISTVIEW });
+
+export const loadProducts = (products) => ({ type: LOAD_PRODUCTS, payload: products });
+export const sortProducts = () => ({ type: SORT_PRODUCTS });
 
 export const updateSort = (e) => {
   const { value } = e.target;
@@ -75,25 +62,12 @@ export const updateFilters = (e) => {
   return { type: UPDATE_FILTERS, payload: { name, value } };
 };
 
-export const clearFilters = () => {
-  return { type: CLEAR_FILTERS };
-};
+export const clearFilters = () => ({ type: CLEAR_FILTERS });
+export const countCartTotals = () => ({ type: COUNT_CART_TOTALS });
 
-export const getProductsBegin = () => {
-  return { type: GET_PRODUCTS_BEGIN };
-};
-export const getProductsSuccess = (products) => {
-  return { type: GET_PRODUCTS_SUCCESS, payload: products };
-};
-export const getProductsError = () => {
-  return { type: GET_PRODUCTS_ERROR };
-};
-export const getSingleProductBegin = () => {
-  return { type: GET_SINGLE_PRODUCT_BEGIN };
-};
-export const getSingleProductSuccess = (single_product) => {
-  return { type: GET_SINGLE_PRODUCT_SUCCESS, payload: single_product };
-};
-export const getSingleProductError = () => {
-  return { type: GET_SINGLE_PRODUCT_ERROR };
-};
+export const getProductsBegin = () => ({ type: GET_PRODUCTS_BEGIN });
+export const getProductsSuccess = (products) => ({ type: GET_PRODUCTS_SUCCESS, payload: products });
+export const getProductsError = () => ({ type: GET_PRODUCTS_ERROR });
+export const getSingleProductBegin = (url) => ({ type: GET_SINGLE_PRODUCT_BEGIN, payload: url});
+export const getSingleProductSuccess = (single_product) => ({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: single_product });
+export const getSingleProductError = () => ({ type: GET_SINGLE_PRODUCT_ERROR });

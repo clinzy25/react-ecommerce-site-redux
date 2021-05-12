@@ -1,27 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { useFilterContext } from '../context/filter_context';
 import GridView from './GridView';
 import ListView from './ListView';
-import { getProductsBegin } from '../actions';
+import { getProductsBegin, loadProducts } from '../actions';
 
 const ProductList = () => {
   const { filtered_products: products, grid_view } = useSelector(
-    (state) => state.filtered_products
+    (state) => state.filter_reducer
   );
-  const dispatch = useDispatch();
-  
-  const getProducts = useSelector((state) => state.products_reducer.products)
 
-  
-  // Should it be in a use effect? 
+  const dispatch = useDispatch();
+
+  const getProducts = useCallback(
+    useSelector((state) => state.products_reducer.products)
+  );
+
   useEffect(() => {
     dispatch(getProductsBegin());
-  }, []);
-
-  // const getProducts = () => {
-  //   dispatch(getProductsBegin());
-  // };
+  }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(loadProducts(getProducts));
+  }, [dispatch, getProducts]);
 
   if (products.length < 1) {
     return (
@@ -31,10 +31,10 @@ const ProductList = () => {
     );
   }
   if (grid_view === false) {
-    return <ListView products={getProducts} />;
+    return <ListView products={products} />;
   }
 
-  return <GridView products={getProducts} />;
+  return <GridView products={products} />;
 };
 
 export default ProductList;

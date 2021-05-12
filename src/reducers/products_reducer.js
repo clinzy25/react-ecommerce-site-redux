@@ -7,8 +7,6 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-  getProductsBegin,
-  getProductsSuccess,
 } from '../actions';
 
 const initialState = {
@@ -88,10 +86,3 @@ function products_reducer(state = initialState, action) {
 }
 
 export default products_reducer;
-
-export const loadProducts = () => async (dispatch, getState) => {
-  const products = await fetch(
-    'https://course-api.com/react-store-products'
-  ).then((res) => res.json());
-  dispatch(getProductsSuccess(products));
-};
