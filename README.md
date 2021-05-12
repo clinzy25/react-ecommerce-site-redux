@@ -1,7 +1,8 @@
 #### View at: https://comfy-sloth-cl.netlify.app/
 
-A full React ecommerce site.
+The [react-ecommerce-site](https://github.com/clinzy25/react-ecommerce-site) converted to redux.
 
+- Redux Sagas
 - Auth0
 - Stripe payments
 - React router
