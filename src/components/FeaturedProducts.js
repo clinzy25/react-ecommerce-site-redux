@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useProductsContext } from '../context/products_context';
 import Error from './Error';
 import Loading from './Loading';
 import Product from './Product';
+import { getProductsBegin } from '../actions';
 
 const FeaturedProducts = () => {
   const {
     products_loading: loading,
     products_error: error,
     featured_products: featured,
-  } = useProductsContext();
+  } = useSelector((state) => state.products_reducer);
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductsBegin());
+  }, [dispatch]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -23,11 +30,12 @@ const FeaturedProducts = () => {
         <div className='underline' />
       </div>
       <div className='section-center featured'>
-        {featured.slice(0, 3).map((product) => (
-          <Product key={product.id} {...product} />
-        ))}
+        {featured &&
+          featured
+            .slice(0, 3)
+            .map((product) => <Product key={product.id} {...product} />)}
       </div>
-      <Link to='/products' className='btn' >
+      <Link to='/products' className='btn'>
         All products
       </Link>
     </Wrapper>

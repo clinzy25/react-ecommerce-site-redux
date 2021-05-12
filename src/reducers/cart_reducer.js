@@ -6,9 +6,23 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
 } from '../actions';
 
-const cart_reducer = (state, action) => {
+const getLocalStorage = () => {
+  const cart = localStorage.getItem('cart');
+  if (cart) {
+    return JSON.parse(localStorage.getItem('cart'));
+  }
+  return [];
+};
+
+const initialState = {
+  cart: getLocalStorage(),
+  total_items: 0,
+  total_amount: 0,
+  shipping_fee: 534,
+};
+
+function cart_reducer(state = initialState, action) {
   switch (action.type) {
-    
     case ADD_TO_CART: {
       const { id, color, amount, product } = action.payload;
       const tempItem = state.cart.find((i) => i.id === id + color);
@@ -36,7 +50,7 @@ const cart_reducer = (state, action) => {
       };
       return { ...state, cart: [...state.cart, newItem] };
     }
-    
+
     case REMOVE_CART_ITEM: {
       const newCart = state.cart.filter((item) => item.id !== action.payload);
       return {
@@ -44,13 +58,13 @@ const cart_reducer = (state, action) => {
         cart: [...newCart],
       };
     }
-    
+
     case CLEAR_CART:
       return {
         ...state,
         cart: [],
       };
-      
+
     case TOGGLE_CART_ITEM_AMOUNT: {
       const { id, value } = action.payload;
       const tempCart = state.cart.map((item) => {
@@ -73,7 +87,7 @@ const cart_reducer = (state, action) => {
         cart: [...tempCart],
       };
     }
-    
+
     case COUNT_CART_TOTALS: {
       const { total_items, total_amount } = state.cart.reduce(
         (total, item) => {
@@ -91,10 +105,10 @@ const cart_reducer = (state, action) => {
       );
       return { ...state, total_items, total_amount };
     }
-    
+
     default:
-      throw new Error(`No Matching "${action.type}" - action type`);
+      return state;
   }
-};
+}
 
 export default cart_reducer;

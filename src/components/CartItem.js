@@ -1,19 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
-import { useCartContext } from '../context/cart_context';
+import { removeItem, toggleAmount } from '../actions';
 
 const CartItem = ({ id, image, name, color, price, amount, max }) => {
-  const { removeItem, toggleAmount } = useCartContext();
+  const dispatch = useDispatch();
 
   const increase = () => {
-    toggleAmount(id, 'inc');
+    dispatch(toggleAmount(id, 'inc'));
   };
 
   const decrease = () => {
-    toggleAmount(id, 'dec');
+    dispatch(toggleAmount(id, 'dec'));
   };
 
   return (
@@ -40,7 +41,7 @@ const CartItem = ({ id, image, name, color, price, amount, max }) => {
       <button
         type='button'
         className='remove-btn'
-        onClick={() => removeItem(id)}
+        onClick={() => dispatch(removeItem(id))}
       >
         <FaTrash />
       </button>

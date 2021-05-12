@@ -1,16 +1,20 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import logo from '../assets/logo.svg';
-import { useProductsContext } from '../context/products_context';
 import { links } from '../utils/constants';
 import CartButtons from './CartButtons';
-import { useUserContext } from '../context/user_context';
+import { closeSidebar } from '../actions';
 
 const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useProductsContext();
-  const { myUser } = useUserContext();
+  const isSidebarOpen = useSelector(
+    (state) => state.products_reducer.isSidebarOpen
+  );
+  const { user } = useAuth0();
+  const dispatch = useDispatch();
 
   return (
     <SidebarContainer>
@@ -20,20 +24,20 @@ const Sidebar = () => {
         <div className='sidebar-header'>
           <img src={logo} className='logo' alt='comfy sloth' />
           <button className='close-btn' type='button'>
-            <FaTimes onClick={closeSidebar} />
+            <FaTimes onClick={() => dispatch(closeSidebar())} />
           </button>
         </div>
         <ul className='links'>
           {links.map(({ id, text, url }) => (
             <li key={id}>
-              <Link key={id} to={url} onClick={closeSidebar}>
+              <Link key={id} to={url} onClick={() => dispatch(closeSidebar())}>
                 {text}
               </Link>
             </li>
           ))}
-          {myUser && (
+          {user && (
             <li>
-              <Link to='/checkout' onClick={closeSidebar}>
+              <Link to='/checkout' onClick={() => dispatch(closeSidebar())}>
                 Checkout
               </Link>
             </li>

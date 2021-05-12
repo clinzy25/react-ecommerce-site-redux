@@ -9,9 +9,25 @@ import {
   CLEAR_FILTERS,
 } from '../actions';
 
-const filter_reducer = (state, action) => {
+const initialState = {
+  filtered_products: [],
+  all_products: [],
+  grid_view: true,
+  sort: 'price-lowest',
+  filters: {
+    text: '',
+    company: 'all',
+    color: 'all',
+    category: 'all',
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
+  },
+};
+
+function filter_reducer(state = initialState, action) {
   switch (action.type) {
-    
     case LOAD_PRODUCTS: {
       let maxPrice = action.payload.map((p) => p.price);
       maxPrice = Math.max(...maxPrice);
@@ -22,25 +38,25 @@ const filter_reducer = (state, action) => {
         filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
       };
     }
-    
+
     case SET_GRIDVIEW:
       return {
         ...state,
         grid_view: true,
       };
-      
+
     case SET_LISTVIEW:
       return {
         ...state,
         grid_view: false,
       };
-      
+
     case UPDATE_SORT:
       return {
         ...state,
         sort: action.payload,
       };
-      
+
     case SORT_PRODUCTS: {
       const { sort, filtered_products } = state;
       let tempProducts = [...filtered_products];
@@ -66,7 +82,7 @@ const filter_reducer = (state, action) => {
         filtered_products: tempProducts,
       };
     }
-    
+
     case UPDATE_FILTERS: {
       const { name, value } = action.payload;
       return {
@@ -74,7 +90,7 @@ const filter_reducer = (state, action) => {
         filters: { ...state.filters, [name]: value },
       };
     }
-    
+
     case FILTER_PRODUCTS: {
       const { all_products } = state;
       const { text, company, color, price, shipping, category } = state.filters;
@@ -104,7 +120,7 @@ const filter_reducer = (state, action) => {
 
       return { ...state, filtered_products: tempProducts };
     }
-    
+
     case CLEAR_FILTERS:
       return {
         ...state,
@@ -118,10 +134,10 @@ const filter_reducer = (state, action) => {
           shipping: false,
         },
       };
-      
+
     default:
-      throw new Error(`No Matching "${action.type}" - action type`);
+      return state;
   }
-};
+}
 
 export default filter_reducer;

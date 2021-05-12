@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
-import { useFilterContext } from '../context/filter_context';
+// import { useFilterContext } from '../context/filter_context';
+import { setGridView, setListView, updateSort, sortProducts } from '../actions';
 
 const Sort = () => {
-  const {
-    filtered_products: products,
-    grid_view,
-    setGridView,
-    setListView,
-    sort,
-    updateSort
-  } = useFilterContext();
+  const { filtered_products: products, grid_view, sort } = useSelector(
+    (state) => state.filter_reducer
+  );
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(sortProducts());
+  }, [sort, dispatch]);
 
   return (
     <Wrapper>
@@ -19,14 +22,14 @@ const Sort = () => {
         <button
           type='button'
           className={`${grid_view ? 'active' : null}`}
-          onClick={setGridView}
+          onClick={() => dispatch(setGridView())}
         >
           <BsFillGridFill />
         </button>
         <button
           type='button'
           className={`${grid_view ? null : 'active'}`}
-          onClick={setListView}
+          onClick={() => dispatch(setListView())}
         >
           <BsList />
         </button>
@@ -38,7 +41,7 @@ const Sort = () => {
           Sort by
           <select
             value={sort}
-            onChange={updateSort}
+            onChange={(e) => dispatch(updateSort(e))}
             name='sort'
             id='sort'
             className='sort-input'

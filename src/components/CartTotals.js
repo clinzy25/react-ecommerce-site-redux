@@ -1,13 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
 import { formatPrice } from '../utils/helpers';
 
 const CartTotals = () => {
-  const { total_amount, shipping_fee } = useCartContext();
-  const { myUser, loginWithRedirect } = useUserContext();
+  const { total_amount, shipping_fee } = useSelector((state) => state.cart_reducer);
+  const { loginWithRedirect, user } = useAuth0();
 
   return (
     <Wrapper>
@@ -25,7 +25,7 @@ const CartTotals = () => {
             <span>{formatPrice(total_amount + shipping_fee)}</span>
           </h4>
         </article>
-        {myUser ? (
+        {user ? (
           <Link to='/checkout' className='btn'>
             proceed to checkout
           </Link>

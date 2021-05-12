@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
-import { useFilterContext } from '../context/filter_context';
 import { getUniqueValues, formatPrice } from '../utils/helpers';
+import { updateFilters, clearFilters, FILTER_PRODUCTS } from '../actions';
 
 const Filters = () => {
+  const dispatch = useDispatch();
+
   const {
-    filters: {
-      text,
-      category,
-      company,
-      color,
-      min_price,
-      max_price,
-      price,
-      shipping,
-    },
-    updateFilters,
-    clearFilters,
     all_products,
-  } = useFilterContext();
+    filters,
+  } = useSelector((state) => state.filter_reducer);
+
+  const {
+    category,
+    company,
+    color,
+    min_price,
+    max_price,
+    price,
+    shipping,
+    text,
+  } = useSelector((state) => state.filter_reducer.filters);
+
+  useEffect(() => {
+    dispatch({ type: FILTER_PRODUCTS });
+  }, [filters, dispatch]);
 
   const categories = getUniqueValues(all_products, 'category');
   const companies = getUniqueValues(all_products, 'company');
@@ -36,7 +43,7 @@ const Filters = () => {
               name='text'
               placeholder='search'
               value={text}
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
               className='search-input'
             />
           </div>
@@ -49,7 +56,7 @@ const Filters = () => {
                   key={cat}
                   name='category'
                   type='button'
-                  onClick={updateFilters}
+                  onClick={(e) => dispatch(updateFilters(e))}
                   className={`${
                     category === cat.toLowerCase() ? 'active' : null
                   }`}
@@ -65,7 +72,7 @@ const Filters = () => {
             <select
               name='company'
               value={company}
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
               className='company'
             >
               {companies.map((comp) => (
@@ -89,7 +96,7 @@ const Filters = () => {
                         className={`${
                           color === 'all' ? 'all-btn active' : 'all-btn'
                         }`}
-                        onClick={updateFilters}
+                        onClick={(e) => dispatch(updateFilters(e))}
                       >
                         All
                       </button>
@@ -105,7 +112,7 @@ const Filters = () => {
                         col === color ? 'active color-btn' : 'color-btn'
                       }`}
                       data-color={col}
-                      onClick={updateFilters}
+                      onClick={(e) => dispatch(updateFilters(e))}
                     >
                       {col === color ? <FaCheck /> : null}
                     </button>
@@ -124,7 +131,7 @@ const Filters = () => {
               min={min_price}
               max={max_price}
               value={price}
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
             />
           </div>
           {/* Shipping */}
@@ -135,13 +142,17 @@ const Filters = () => {
                 type='checkbox'
                 name='shipping'
                 id='shipping'
-                onChange={updateFilters}
+                onChange={(e) => dispatch(updateFilters(e))}
                 checked={shipping}
               />
             </label>
           </div>
         </form>
-        <button type='button' className='clear-btn' onClick={clearFilters}>
+        <button
+          type='button'
+          className='clear-btn'
+          onClick={() => dispatch(clearFilters())}
+        >
           {' '}
           Clear Filters
         </button>

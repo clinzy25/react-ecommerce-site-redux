@@ -1,11 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useCartContext } from '../context/cart_context';
 import { CartContent, PageHero } from '../components';
 
 const CartPage = () => {
-  const { cart } = useCartContext();
+  const {cart} = useSelector((state) => state.cart_reducer);
   
   if (cart.length < 1) {
     return (
@@ -19,7 +19,7 @@ const CartPage = () => {
       </Wrapper>
     );
   }
-  
+
   return (
     <main>
       <PageHero title='cart' />

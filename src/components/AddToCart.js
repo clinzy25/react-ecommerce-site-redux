@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
-import { useCartContext } from '../context/cart_context';
 import AmountButtons from './AmountButtons';
+import { addToCart } from '../actions';
 
 const AddToCart = ({ product }) => {
   const { id, stock, colors } = product;
   const [mainColor, setMainColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
-  const { addToCart } = useCartContext();
+  const dispatch = useDispatch();
 
   const increase = () => {
     setAmount((oldAmount) => {
@@ -56,7 +57,7 @@ const AddToCart = ({ product }) => {
         <Link
           to='/cart'
           className='btn'
-          onClick={() => addToCart(id, mainColor, amount, product)}
+          onClick={() => dispatch(addToCart(id, mainColor, amount, product))}
         >
           Add to cart
         </Link>

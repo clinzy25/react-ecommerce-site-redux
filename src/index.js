@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { Provider } from 'react-redux';
 import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
-import { ProductsProvider } from './context/products_context';
-import { FilterProvider } from './context/filter_context';
-import { CartProvider } from './context/cart_context';
-import { UserProvider } from './context/user_context';
+import store from './reducers/root_reducer';
 
 ReactDOM.render(
   <Auth0Provider
@@ -15,15 +13,9 @@ ReactDOM.render(
     cacheLocation='localstorage'
     redirectUri={window.location.origin}
   >
-    <UserProvider>
-      <ProductsProvider>
-        <FilterProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </FilterProvider>
-      </ProductsProvider>
-    </UserProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </Auth0Provider>,
   document.getElementById('root')
 );

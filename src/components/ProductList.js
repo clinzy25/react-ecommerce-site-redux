@@ -1,10 +1,27 @@
-import React from 'react';
-import { useFilterContext } from '../context/filter_context';
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import GridView from './GridView';
 import ListView from './ListView';
+import { getProductsBegin, loadProducts } from '../actions';
 
 const ProductList = () => {
-  const { filtered_products: products, grid_view } = useFilterContext();
+  const { filtered_products: products, grid_view } = useSelector(
+    (state) => state.filter_reducer
+  );
+
+  const dispatch = useDispatch();
+
+  const getProducts = useCallback(
+    useSelector((state) => state.products_reducer.products)
+  );
+
+  useEffect(() => {
+    dispatch(getProductsBegin());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(loadProducts(getProducts));
+  }, [dispatch, getProducts]);
 
   if (products.length < 1) {
     return (
