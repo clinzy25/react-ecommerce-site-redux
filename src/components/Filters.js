@@ -7,38 +7,21 @@ import { getUniqueValues, formatPrice } from '../utils/helpers';
 import { updateFilters, clearFilters, FILTER_PRODUCTS } from '../actions';
 
 const Filters = () => {
-  // const {
-  //   filters: {
-  //     text,
-  //     category,
-  //     company,
-  //     color,
-  //     min_price,
-  //     max_price,
-  //     price,
-  //     shipping,
-  //   },
-  //   updateFilters,
-  //   clearFilters,
-  //   all_products,
-  // } = useFilterContext();
-
   const dispatch = useDispatch();
 
+  const { products, all_products } = useSelector(
+    (state) => state.filter_reducer
+  );
+
   const {
-    products,
-    all_products,
-    filters: {
-      text,
-      category,
-      company,
-      color,
-      min_price,
-      max_price,
-      price,
-      shipping,
-    },
-  } = useSelector((state) => state);
+    category,
+    company,
+    color,
+    min_price,
+    max_price,
+    price,
+    shipping,
+  } = useSelector((state) => state.filter_reducer.filters);
 
   // useEffect(() => {
   //   dispatch({ type: FILTER_PRODUCTS });

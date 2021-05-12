@@ -7,17 +7,19 @@ import {
   getSingleProductBegin,
   getSingleProductSuccess,
   getSingleProductError,
+  GET_PRODUCTS_BEGIN,
 } from './actions';
 import fetchProducts from './api';
 
 function* fetchProductsFlow() {
-  yield put(getProductsBegin);
+  // yield put(getProductsBegin);
   const response = yield call(fetchProducts);
+  console.log(response)
   yield put(getProductsSuccess(response));
 }
 
 export default function* productsSaga() {
-  yield takeLatest(getProductsBegin, fetchProductsFlow);
+  yield takeLatest(GET_PRODUCTS_BEGIN, fetchProductsFlow);
 }
 
 // const fetchSingleProduct = useCallback(async (url) => {

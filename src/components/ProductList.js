@@ -10,17 +10,18 @@ const ProductList = () => {
     (state) => state.filtered_products
   );
   const dispatch = useDispatch();
+  
+  const getProducts = useSelector((state) => state.products_reducer.products)
 
   
   // Should it be in a use effect? 
-  
-  // useEffect(() => {
-  //   dispatch(getProductsBegin());
-  // }, []);
-
-  const getProducts = () => {
+  useEffect(() => {
     dispatch(getProductsBegin());
-  };
+  }, []);
+
+  // const getProducts = () => {
+  //   dispatch(getProductsBegin());
+  // };
 
   if (products.length < 1) {
     return (
